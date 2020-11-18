@@ -1,0 +1,95 @@
+@import '../__colors.css';
+
+h1 {
+    color: var(--color-text-primary);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.form {
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+    background-color: var(--color-darker);
+    box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px, rgba(0, 0, 0, 0.04) 0px 16px 24px,
+        rgba(0, 0, 0, 0.01) 0px 24px 32px;
+    border-radius: 30px;
+    color: var(--color-text-secondary);
+    padding: 1rem;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    border: 1px solid var(--color-bg);
+    border-radius: 10px;
+    margin: 1rem 0;
+    padding: 10px 6px;
+}
+
+label {
+    padding: 6px;
+}
+
+.control {
+    width: 100%;
+}
+
+input,
+input:focus {
+    color: var(--color-text-primary);
+    caret-color: var(--color-text-primary);
+}
+
+input {
+    width: 100%;
+    position: relative;
+    font-weight: 500;
+    border: none;
+    background-color: var(--color-darker);
+    font-size: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 6px;
+    appearance: textfield;
+}
+
+/* prevent the autocomplete feature in Chrome to insert a white background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px rgb(33, 36, 41) inset !important;
+    -webkit-box-shadow: 0 0 0 30px rgb(33, 36, 41) inset !important;
+    -webkit-text-fill-color: var(--color-text-primary) !important;
+}
+
+button {
+    padding: 18px;
+    width: 100%;
+    text-align: center;
+    border-radius: 12px;
+    border: none;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--color-button-primary);
+    color: var(--button-color-text);
+    font-size: 1.25rem;
+}
+
+button:hover {
+    background-color: var(--color-button-secondary);
+}
