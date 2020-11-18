@@ -7,12 +7,21 @@ const useForm = (submit, validate) => {
         password: '',
     });
     const [errors, setErrors] = useState({});
+    const [passwordSafety, setPasswordSafety] = useState();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         // check if form is currently submitting and has no errors
         if (isSubmitting && Object.keys(errors).length === 0) {
             submit();
+            setIsSubmitting(false);
+            setValues({
+                email: '',
+                name: '',
+                password: '',
+            });
+            setErrors({});
+            setPasswordSafety('');
         }
     }, [errors, submit, isSubmitting]);
 
@@ -20,7 +29,9 @@ const useForm = (submit, validate) => {
         if (e) e.preventDefault();
         setIsSubmitting(true);
         // validate form and set errors in state
-        setErrors(validate(values));
+        const { errors, passwordSafety } = validate(values);
+        setErrors(errors);
+        setPasswordSafety(passwordSafety);
     };
 
     const handleChange = e => {
@@ -33,6 +44,8 @@ const useForm = (submit, validate) => {
         handleChange,
         handleSubmit,
         values,
+        errors,
+        passwordSafety,
     };
 };
 

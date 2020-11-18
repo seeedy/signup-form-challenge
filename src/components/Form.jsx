@@ -6,18 +6,24 @@ import styles from './Form.module.css';
 
 const Form = () => {
     const submit = () => {
-        window.alert(`The form is being submitted`);
+        window.alert(`The form is being submitted to server`);
     };
 
-    const { handleSubmit, handleChange, values } = useForm(submit, validate);
+    const { handleSubmit, handleChange, values, errors, passwordSafety } = useForm(submit, validate);
+
+    console.log({ passwordSafety, errors });
 
     return (
         <div className={styles.container}>
             <div className={styles.form}>
                 <h1>Signup</h1>
                 <form noValidate onSubmit={handleSubmit}>
-                    <div className={styles.field}>
-                        <label>Name</label>
+                    <div className={errors && errors.name ? [styles.field, styles.isDanger].join(' ') : styles.field}>
+                        <div className={styles.fieldLabel}>
+                            <label>Name</label>
+                            {errors && errors.name && <span className={styles.dangerText}>{errors.name}</span>}
+                        </div>
+
                         <div className={styles.control}>
                             <input
                                 className='input'
@@ -29,8 +35,12 @@ const Form = () => {
                             />
                         </div>
                     </div>
-                    <div className={styles.field}>
-                        <label className='label'>Email Address</label>
+
+                    <div className={errors && errors.email ? [styles.field, styles.isDanger].join(' ') : styles.field}>
+                        <div className={styles.fieldLabel}>
+                            <label className='label'>Email Address</label>
+                            {errors && errors.email && <span className={styles.dangerText}>{errors.email}</span>}
+                        </div>
                         <div className={styles.control}>
                             <input
                                 className='input'
@@ -42,8 +52,26 @@ const Form = () => {
                             />
                         </div>
                     </div>
-                    <div className={styles.field}>
-                        <label className='label'>Password</label>
+
+                    <div
+                        className={
+                            passwordSafety === 'high'
+                                ? [styles.field, styles.isOk].join(' ')
+                                : passwordSafety === 'mid'
+                                ? [styles.field, styles.isWarning].join(' ')
+                                : errors.password
+                                ? [styles.field, styles.isDanger].join(' ')
+                                : styles.field
+                        }
+                    >
+                        <div className={styles.fieldLabel}>
+                            <label className='label'>Password</label>
+                            {errors && errors.password && (
+                                <span className={passwordSafety === 'mid' ? styles.warningText : styles.dangerText}>
+                                    {errors.password}
+                                </span>
+                            )}
+                        </div>
                         <div className={styles.control}>
                             <input
                                 className='input'
@@ -55,6 +83,7 @@ const Form = () => {
                             />
                         </div>
                     </div>
+
                     <button type='submit'>Sign Up</button>
                 </form>
             </div>

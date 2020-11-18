@@ -35,6 +35,35 @@ h1 {
     padding: 10px 6px;
 }
 
+.fieldLabel {
+    display: flex;
+    align-items: baseline;
+}
+
+.isDanger {
+    border: 1px solid red;
+}
+.isWarning {
+    border: 1px solid yellow;
+}
+.isOk {
+    border: 1px solid green;
+}
+
+span {
+    font-size: 0.8em;
+}
+
+.dangerText {
+    color: red;
+}
+.warningText {
+    color: yellow;
+}
+.okText {
+    color: green;
+}
+
 label {
     padding: 6px;
 }
