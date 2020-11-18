@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from '../hooks/useForm';
+import validate from './FormValidation';
 
 import styles from './Form.module.css';
 
 const Form = () => {
-    const { handleSubmit, handleChange, values } = useForm();
+    const submit = () => {
+        window.alert(`The form is being submitted`);
+    };
+
+    const { handleSubmit, handleChange, values } = useForm(submit, validate);
 
     return (
         <div className={styles.container}>
