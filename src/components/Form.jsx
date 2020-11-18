@@ -1,85 +1,98 @@
 import React from 'react';
 import useForm from '../hooks/useForm';
-import validate from './FormValidation';
+import validators from './Validators';
 
 import styles from './Form.module.css';
 
 const Form = () => {
     const submit = () => {
+        // This is where the post request would happen
         window.alert(`The form is being submitted to server`);
     };
 
-    const { handleSubmit, handleChange, values, errors, passwordSafety } = useForm(submit, validate);
-
-    console.log({ passwordSafety, errors });
+    // custom hook to handle the form flow
+    // passing a submit callback and the form validation functions
+    const { handleSubmit, handleChange, handleBlur, values, errors, passwordSafety } = useForm(submit, validators);
 
     return (
         <div className={styles.container}>
             <div className={styles.form}>
                 <h1>Signup</h1>
                 <form noValidate onSubmit={handleSubmit}>
-                    <div className={errors && errors.name ? [styles.field, styles.isDanger].join(' ') : styles.field}>
+                    <div
+                        className={errors && errors.username ? [styles.field, styles.isDanger].join(' ') : styles.field}
+                    >
                         <div className={styles.fieldLabel}>
                             <label>Name</label>
-                            {errors && errors.name && <span className={styles.dangerText}>{errors.name}</span>}
+                            {errors.username && <span className={styles.dangerText}>{errors.username}</span>}
                         </div>
 
                         <div className={styles.control}>
                             <input
                                 className='input'
                                 type='text'
-                                name='name'
+                                id='username'
                                 required
-                                value={values.name}
+                                value={values.username || ''}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
                             />
                         </div>
                     </div>
 
-                    <div className={errors && errors.email ? [styles.field, styles.isDanger].join(' ') : styles.field}>
+                    <div className={errors.email ? [styles.field, styles.isDanger].join(' ') : styles.field}>
                         <div className={styles.fieldLabel}>
                             <label className='label'>Email Address</label>
-                            {errors && errors.email && <span className={styles.dangerText}>{errors.email}</span>}
+                            {errors.email && <span className={styles.dangerText}>{errors.email}</span>}
                         </div>
                         <div className={styles.control}>
                             <input
                                 className='input'
                                 type='email'
-                                name='email'
+                                id='email'
                                 required
-                                value={values.email}
+                                value={values.email || ''}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
                             />
                         </div>
                     </div>
 
                     <div
                         className={
-                            passwordSafety === 'high'
-                                ? [styles.field, styles.isOk].join(' ')
+                            passwordSafety === 'low'
+                                ? [styles.field, styles.isDanger].join(' ')
                                 : passwordSafety === 'mid'
                                 ? [styles.field, styles.isWarning].join(' ')
-                                : errors.password
-                                ? [styles.field, styles.isDanger].join(' ')
+                                : passwordSafety === 'high'
+                                ? [styles.field, styles.isOk].join(' ')
                                 : styles.field
                         }
                     >
                         <div className={styles.fieldLabel}>
                             <label className='label'>Password</label>
-                            {errors && errors.password && (
-                                <span className={passwordSafety === 'mid' ? styles.warningText : styles.dangerText}>
-                                    {errors.password}
-                                </span>
-                            )}
+
+                            <span
+                                className={
+                                    passwordSafety === 'high'
+                                        ? styles.okText
+                                        : passwordSafety === 'mid'
+                                        ? styles.warningText
+                                        : styles.dangerText
+                                }
+                            >
+                                {passwordSafety === 'high' ? 'Looks good!' : errors.password}
+                            </span>
                         </div>
                         <div className={styles.control}>
                             <input
                                 className='input'
                                 type='password'
-                                name='password'
+                                id='password'
                                 required
-                                value={values.password}
+                                value={values.password || ''}
                                 onChange={handleChange}
+                                onBlur={handleBlur}
                             />
                         </div>
                     </div>

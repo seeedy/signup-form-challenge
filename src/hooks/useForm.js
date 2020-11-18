@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react';
 
-const useForm = (submit, validate) => {
-    const [values, setValues] = useState({
-        email: '',
-        name: '',
-        password: '',
-    });
+const useForm = (submit, validators) => {
+    const [values, setValues] = useState({});
     const [errors, setErrors] = useState({});
-    const [passwordSafety, setPasswordSafety] = useState();
+    const [passwordSafety, setPasswordSafety] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -15,11 +11,7 @@ const useForm = (submit, validate) => {
         if (isSubmitting && Object.keys(errors).length === 0) {
             submit();
             setIsSubmitting(false);
-            setValues({
-                email: '',
-                name: '',
-                password: '',
-            });
+            setValues({});
             setErrors({});
             setPasswordSafety('');
         }
@@ -28,21 +20,53 @@ const useForm = (submit, validate) => {
     const handleSubmit = e => {
         if (e) e.preventDefault();
         setIsSubmitting(true);
-        // validate form and set errors in state
-        const { errors, passwordSafety } = validate(values);
+
+        // validate all input values on form
+        let errors = {};
+        Object.keys(validators).forEach(id => {
+            const validator = validators[id];
+            if (id === 'password' && validator) {
+                const { error } = validator(values[id]);
+                if (error) {
+                    errors[id] = error;
+                }
+            } else if (validator) {
+                const error = validator(values[id]);
+                if (error) {
+                    errors[id] = error;
+                }
+            }
+            return errors;
+        });
         setErrors(errors);
-        setPasswordSafety(passwordSafety);
     };
 
     const handleChange = e => {
         e.persist();
-        // set field values in state
-        setValues(values => ({ ...values, [e.target.name]: e.target.value }));
+        setValues(values => ({ ...values, [e.target.id]: e.target.value }));
+    };
+
+    const handleBlur = e => {
+        // single field input validation on blur
+
+        let { id, value } = e.target;
+        let validator = validators[id];
+
+        if (id === 'password' && validator) {
+            const { error, passwordSafety } = validator(value);
+            setErrors(errors => ({ ...errors, [id]: error }));
+            setPasswordSafety(passwordSafety);
+        } else if (validator) {
+            setErrors(errors => ({ ...errors, [id]: validator(value) }));
+            console.log({ errors });
+            setValues(values => ({ ...values, [id]: value }));
+        }
     };
 
     return {
         handleChange,
         handleSubmit,
+        handleBlur,
         values,
         errors,
         passwordSafety,
