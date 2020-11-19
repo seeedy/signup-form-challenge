@@ -19,6 +19,7 @@ const email = value => {
 
 const password = value => {
     let error = '';
+    // passwordSafety is used to conditionally style the input and provide info to the user
     let passwordSafety = '';
     if (!value) {
         error = 'Password is required';

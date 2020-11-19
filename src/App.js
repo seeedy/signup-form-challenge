@@ -11,7 +11,7 @@ function App() {
                     <img src={logo} className='App-logo' alt='logo' />
                 </div>
                 <div>
-                    Learn <code>react</code> online.
+                    Learn <code>React</code>
                 </div>
             </header>
             <Form />

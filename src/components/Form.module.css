@@ -41,13 +41,13 @@ h1 {
 }
 
 .isDanger {
-    border: 1px solid red;
+    border: 1px solid var(--color-isDanger);
 }
 .isWarning {
-    border: 1px solid yellow;
+    border: 1px solid var(--color-isWarning);
 }
 .isOk {
-    border: 1px solid green;
+    border: 1px solid var(--color-isOk);
 }
 
 span {
@@ -55,13 +55,13 @@ span {
 }
 
 .dangerText {
-    color: red;
+    color: var(--color-isDanger);
 }
 .warningText {
-    color: yellow;
+    color: var(--color-isWarning);
 }
 .okText {
-    color: green;
+    color: var(--color-isOk);
 }
 
 label {

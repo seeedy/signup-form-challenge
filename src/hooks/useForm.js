@@ -21,7 +21,7 @@ const useForm = (submit, validators) => {
         if (e) e.preventDefault();
         setIsSubmitting(true);
 
-        // validate all input values on form
+        // validate all input values
         let errors = {};
         Object.keys(validators).forEach(id => {
             const validator = validators[id];
@@ -48,7 +48,6 @@ const useForm = (submit, validators) => {
 
     const handleBlur = e => {
         // single field input validation on blur
-
         let { id, value } = e.target;
         let validator = validators[id];
 

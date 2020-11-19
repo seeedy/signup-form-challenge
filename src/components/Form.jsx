@@ -1,6 +1,6 @@
 import React from 'react';
 import useForm from '../hooks/useForm';
-import validators from './Validators';
+import validators from './validators';
 
 import styles from './Form.module.css';
 
@@ -23,7 +23,7 @@ const Form = () => {
                         className={errors && errors.username ? [styles.field, styles.isDanger].join(' ') : styles.field}
                     >
                         <div className={styles.fieldLabel}>
-                            <label>Name</label>
+                            <label htmlFor='username'>Name</label>
                             {errors.username && <span className={styles.dangerText}>{errors.username}</span>}
                         </div>
 
@@ -33,6 +33,7 @@ const Form = () => {
                                 type='text'
                                 id='username'
                                 required
+                                placeholder='Enter your name'
                                 value={values.username || ''}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
@@ -42,7 +43,7 @@ const Form = () => {
 
                     <div className={errors.email ? [styles.field, styles.isDanger].join(' ') : styles.field}>
                         <div className={styles.fieldLabel}>
-                            <label className='label'>Email Address</label>
+                            <label htmlFor='email'>Email</label>
                             {errors.email && <span className={styles.dangerText}>{errors.email}</span>}
                         </div>
                         <div className={styles.control}>
@@ -51,6 +52,7 @@ const Form = () => {
                                 type='email'
                                 id='email'
                                 required
+                                placeholder='Enter email'
                                 value={values.email || ''}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
@@ -70,7 +72,7 @@ const Form = () => {
                         }
                     >
                         <div className={styles.fieldLabel}>
-                            <label className='label'>Password</label>
+                            <label htmlFor='password'>Password</label>
 
                             <span
                                 className={
@@ -90,6 +92,7 @@ const Form = () => {
                                 type='password'
                                 id='password'
                                 required
+                                placeholder='Enter password'
                                 value={values.password || ''}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
