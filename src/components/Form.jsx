@@ -1,6 +1,6 @@
 import React from 'react';
 import useForm from '../hooks/useForm';
-import validators from './validators';
+import validators from './formValidators';
 
 import styles from './Form.module.css';
 

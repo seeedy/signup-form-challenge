@@ -57,7 +57,6 @@ const useForm = (submit, validators) => {
             setPasswordSafety(passwordSafety);
         } else if (validator) {
             setErrors(errors => ({ ...errors, [id]: validator(value) }));
-            console.log({ errors });
             setValues(values => ({ ...values, [id]: value }));
         }
     };
